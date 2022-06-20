@@ -1,4 +1,8 @@
 <div class="background">
+  <span class="point-counter" *ngIf="hasGameStarted">{{ points }}</span>
+  <button class="start-button" (click)="startGame()" *ngIf="!hasGameStarted">
+    READY
+  </button>
   <div class="board">
     <div
       (click)="flipCard(card)"

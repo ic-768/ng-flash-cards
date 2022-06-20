@@ -12,19 +12,24 @@ export class AppComponent {
   title = 'ng-flash-cards';
   emojis = ['😃', '🧘', '♂️', '🌍', '🌦️', '🍞', '🏁'];
   deck: Deck = this.generateCards();
-  lockClick = false; // used to disable clicking when showing cards with setTimeOut
-
   flippedCards: Card[] = [];
+  points = 0;
+
+  lockClick = false; // used to disable clicking when showing cards with setTimeOut
+  hasGameStarted = false;
 
   getCardClass(card: Card) {
-    if (!card.isFlipped) {
+    if (!this.hasGameStarted || card.isFlipped) {
+      return 'face-up';
+    } else {
       return 'face-down';
     }
-    if (card.isFlipped) {
-      return 'face-up';
-    }
-    return '';
   }
+
+  startGame() {
+    this.hasGameStarted = true;
+  }
+
   generateCards(): Deck {
     return this.emojis
       .concat(this.emojis)
@@ -33,15 +38,17 @@ export class AppComponent {
   }
 
   flipCard(card: Card) {
-    if (card.isFlipped || this.lockClick) return;
+    if (!this.hasGameStarted || card.isFlipped || this.lockClick) return;
     card.isFlipped = true;
     this.flippedCards.push(card);
     if (this.flippedCards.length === 2) {
-      if (this.cardsMatch(this.flippedCards as [Card, Card])) {
+      if (this.flippedCardsMatch()) {
         this.flippedCards = [];
+        this.points += 50;
       } else {
         this.lockClick = true;
         setTimeout(() => {
+          this.points -= 50;
           this.lockClick = false;
           this.flippedCards.forEach((c) => (c.isFlipped = false));
           this.flippedCards = [];
@@ -50,8 +57,7 @@ export class AppComponent {
     }
   }
 
-  cardsMatch(cards: Deck) {
-    if (cards.length === 2) return cards[0].emoji === cards[1].emoji;
-    else throw new Error('too many cards to check');
+  flippedCardsMatch() {
+    return this.flippedCards[0].emoji === this.flippedCards[1].emoji;
   }
 }
