@@ -4,16 +4,11 @@
     READY
   </button>
   <div class="board">
-    <div
-      (click)="flipCard(card)"
-      role="button"
-      class="card-container"
-      [ngClass]="getCardClass(card)"
+    <app-card
       *ngFor="let card of deck"
-    >
-      <div class="emoji-container">
-        {{ card.emoji }}
-      </div>
-    </div>
+      [hasGameStarted]="hasGameStarted"
+      [card]="card"
+      (click)="flipCard(card)"
+    ></app-card>
   </div>
 </div>

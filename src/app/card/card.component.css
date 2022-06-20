@@ -1,0 +1,39 @@
+.card-container {
+  border: 1px solid gray;
+  background-color: #0e0e0e;
+  border-radius: 20px;
+  height: 160px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+
+  background-image: url(../../assets/card.png);
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card-container.face-up .emoji-container {
+  border-radius: 20px;
+  width: 80%;
+  height: 80%;
+}
+
+.card-container.face-down .emoji-container {
+  width: 0%;
+  height: 0%;
+  border-radius: 50%;
+}
+
+.emoji-container {
+  transition: all 500ms linear;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  font-size: 80px;
+}

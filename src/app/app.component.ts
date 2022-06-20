@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
-type Card = { emoji: string; isFlipped: boolean };
-type Deck = Card[];
+export type Card = { emoji: string; isFlipped: boolean };
+export type Deck = Card[];
 
 @Component({
   selector: 'app-root',
@@ -18,14 +18,6 @@ export class AppComponent {
   lockClick = false; // used to disable clicking when showing cards with setTimeOut
   hasGameStarted = false;
 
-  getCardClass(card: Card) {
-    if (!this.hasGameStarted || card.isFlipped) {
-      return 'face-up';
-    } else {
-      return 'face-down';
-    }
-  }
-
   startGame() {
     this.hasGameStarted = true;
   }
@@ -39,6 +31,7 @@ export class AppComponent {
 
   flipCard(card: Card) {
     if (!this.hasGameStarted || card.isFlipped || this.lockClick) return;
+
     card.isFlipped = true;
     this.flippedCards.push(card);
     if (this.flippedCards.length === 2) {
